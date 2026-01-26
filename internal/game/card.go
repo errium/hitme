@@ -11,10 +11,10 @@ func NewCard(Suit, Rank string) Card {
 	return Card{Suit: Suit, Rank: Rank}
 }
 
-func (c Card) GetValue() int {
+func (c Card) CardValue() int {
 	switch c.Rank {
 	case "a":
-		return 11 // TODO: handle ace 1 & 11 logic
+		return 11
 	case "k", "q", "j", "10":
 		return 10
 	default:
