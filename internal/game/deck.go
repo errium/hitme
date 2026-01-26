@@ -1,0 +1,28 @@
+package game
+
+import "math/rand/v2"
+
+type Deck struct {
+	Cards []Card
+}
+
+func NewDeck() *Deck {
+	suits := []string{"clubs", "diamonds", "hearts", "spades"}
+	ranks := []string{"2", "3", "4", "5", "6", "7", "8", "9", "10", "j", "q", "k", "a"}
+
+	d := &Deck{}
+
+	for _, suit := range suits {
+		for _, rank := range ranks {
+			d.Cards = append(d.Cards, NewCard(suit, rank))
+		}
+	}
+
+	return d
+}
+
+func Shuffle(d Deck) Deck {
+	rand.Shuffle(len(d.Cards), func(i, j int) { d.Cards[i], d.Cards[j] = d.Cards[j], d.Cards[i] })
+
+	return d
+}
