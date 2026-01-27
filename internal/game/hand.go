@@ -40,3 +40,7 @@ func (h *Hand) HandValue() int {
 func (h *Hand) IsBlackjack() bool {
 	return len(h.Cards) == 2 && h.HandValue() == 21
 }
+
+func (h *Hand) IsBusted() bool {
+	return h.HandValue() > 21
+}
