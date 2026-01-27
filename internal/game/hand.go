@@ -36,3 +36,7 @@ func (h *Hand) HandValue() int {
 
 	return total
 }
+
+func (h *Hand) IsBlackjack() bool {
+	return len(h.Cards) == 2 && h.HandValue() == 21
+}
