@@ -16,7 +16,7 @@ func (h *Hand) Clear() {
 	h.Cards = h.Cards[:0]
 }
 
-func (h *Hand) HandValue() int {
+func (h *Hand) Value() int {
 	total := 0
 	aces := 0
 
@@ -25,7 +25,7 @@ func (h *Hand) HandValue() int {
 			aces++
 			total += 11
 		} else {
-			total += c.CardValue()
+			total += c.Value()
 		}
 	}
 
@@ -38,9 +38,9 @@ func (h *Hand) HandValue() int {
 }
 
 func (h *Hand) IsBlackjack() bool {
-	return len(h.Cards) == 2 && h.HandValue() == 21
+	return len(h.Cards) == 2 && h.Value() == 21
 }
 
 func (h *Hand) IsBusted() bool {
-	return h.HandValue() > 21
+	return h.Value() > 21
 }

@@ -1,19 +1,30 @@
 package game
 
-import "math/rand/v2"
+import (
+	"math/rand/v2"
+)
 
 type Deck struct {
-	Cards []Card
+	cards []Card
 }
 
 func NewDeck() *Deck {
-	suits := []string{"clubs", "diamonds", "hearts", "spades"}
-	ranks := []string{"2", "3", "4", "5", "6", "7", "8", "9", "10", "j", "q", "k", "a"}
+	suits := []string{
+		SuitClubs, SuitDiamonds,
+		SuitHearts, SuitSpades,
+	}
+
+	ranks := []string{
+		RankAce, RankKing, RankQueen, RankJack,
+		Rank10, Rank9, Rank8, Rank7, Rank6,
+		Rank5, Rank4, Rank3, Rank2,
+	}
+
 	d := &Deck{}
 
 	for _, suit := range suits {
 		for _, rank := range ranks {
-			d.Cards = append(d.Cards, NewCard(suit, rank))
+			d.cards = append(d.cards, NewCard(suit, rank))
 		}
 	}
 
@@ -21,7 +32,18 @@ func NewDeck() *Deck {
 }
 
 func (d *Deck) Shuffle() {
-	rand.Shuffle(len(d.Cards), func(i, j int) {
-		d.Cards[i], d.Cards[j] = d.Cards[j], d.Cards[i]
+	rand.Shuffle(len(d.cards), func(i, j int) {
+		d.cards[i], d.cards[j] = d.cards[j], d.cards[i]
 	})
+}
+
+func (d *Deck) Draw() Card {
+	if len(d.cards) == 0 {
+		panic("Deck was empty when .Draw() was called.")
+	}
+
+	card := d.cards[0]
+	d.cards = d.cards[1:]
+
+	return card
 }
