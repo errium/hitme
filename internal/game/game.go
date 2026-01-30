@@ -1,20 +1,20 @@
 package game
 
 type Game struct {
-	flow       *Flow
+	Flow       *Flow
 	deck       *Deck
-	playerHand *Hand
-	dealerHand *Hand
+	PlayerHand *Hand
+	DealerHand *Hand
 }
 
 const dealerStandValue int = 17
 
 func NewGame() *Game {
 	return &Game{
-		flow:       NewFlow(),
+		Flow:       NewFlow(),
 		deck:       NewDeck(),
-		playerHand: NewHand(),
-		dealerHand: NewHand(),
+		PlayerHand: NewHand(),
+		DealerHand: NewHand(),
 	}
 }
 
@@ -22,50 +22,50 @@ func (g *Game) Deal() {
 	g.deck.Shuffle()
 
 	for range 2 {
-		g.playerHand.AddCard(g.deck.Draw())
-		g.dealerHand.AddCard(g.deck.Draw())
+		g.PlayerHand.AddCard(g.deck.Draw())
+		g.DealerHand.AddCard(g.deck.Draw())
 	}
 
-	g.flow.Deal()
+	g.Flow.Deal()
 }
 
 func (g *Game) Hit() {
-	if g.flow.State() == StatePlayerTurn {
-		g.playerHand.AddCard(g.deck.Draw())
-		if g.playerHand.IsBusted() {
-			g.flow.EndGame(ResultDealerWin)
+	if g.Flow.State() == StatePlayerTurn {
+		g.PlayerHand.AddCard(g.deck.Draw())
+		if g.PlayerHand.IsBusted() {
+			g.Flow.EndGame(ResultDealerWin)
 		}
 	}
 }
 
 func (g *Game) Stand() {
-	if g.flow.State() != StatePlayerTurn {
+	if g.Flow.State() != StatePlayerTurn {
 		return
 	}
 
-	g.flow.Stand()
+	g.Flow.Stand()
 	g.DealerPlay()
 
 	winner := g.DetermineWinner()
 
-	g.flow.EndGame(winner)
+	g.Flow.EndGame(winner)
 }
 
 func (g *Game) DealerPlay() {
-	for g.dealerHand.Value() < dealerStandValue {
-		g.dealerHand.AddCard(g.deck.Draw())
+	for g.DealerHand.Value() < dealerStandValue {
+		g.DealerHand.AddCard(g.deck.Draw())
 	}
 }
 
 func (g *Game) DetermineWinner() uint8 {
-	playerScore := g.playerHand.Value()
-	dealerScore := g.dealerHand.Value()
+	playerScore := g.PlayerHand.Value()
+	dealerScore := g.DealerHand.Value()
 
-	if g.dealerHand.IsBusted() {
+	if g.DealerHand.IsBusted() {
 		return ResultPlayerWin
 	}
 
-	if g.playerHand.IsBusted() {
+	if g.PlayerHand.IsBusted() {
 		return ResultDealerWin
 	}
 
