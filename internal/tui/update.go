@@ -17,6 +17,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.game.Flow.State() == game.StatePlayerTurn {
 				m.game.Stand()
 			}
+		case "r":
+			if m.game.Flow.IsGameOver() {
+				m.game = game.NewGame()
+				m.game.Deal()
+			}
 		case "ctrl+c", "q":
 			return m, tea.Quit
 		}

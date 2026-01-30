@@ -33,7 +33,7 @@ func (m Model) View() string {
 		case game.ResultPush:
 			s += "Push (Tie)\n"
 		}
-		s += "\nPress q to quit"
+		s += "\nPress Q to quit or R to restart"
 	} else {
 		s += "Press H to hit, S to stand, Q to quit"
 	}
