@@ -6,12 +6,16 @@ import (
 )
 
 type Model struct {
-	game *game.Game
+	game     *game.Game
+	quit     bool
+	showHelp bool
 }
 
-func New() Model {
-	return Model{
-		game: game.NewGame(),
+func NewModel() *Model {
+	return &Model{
+		game:     game.NewGame(),
+		quit:     false,
+		showHelp: true,
 	}
 }
 

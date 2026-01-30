@@ -16,7 +16,7 @@ const (
 	ResultPending uint8 = iota
 	ResultPlayerWin
 	ResultDealerWin
-	ResultTie
+	ResultPush
 )
 
 func NewFlow() *Flow {

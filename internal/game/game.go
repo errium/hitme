@@ -75,5 +75,5 @@ func (g *Game) DetermineWinner() uint8 {
 		return ResultDealerWin
 	}
 
-	return ResultTie
+	return ResultPush
 }

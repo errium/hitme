@@ -6,13 +6,13 @@ import (
 	"github.com/errium/hitme/internal/game"
 )
 
+const header string = `╻ ╻╻╺┳╸┏┳┓┏━╸
+┣━┫┃ ┃ ┃┃┃┣╸ 
+╹ ╹╹ ╹ ╹ ╹┗━╸`
+
 func (m Model) View() string {
-	s := "=== Blackjack ===\n\n"
+	s := header + "\n\n"
 
-	// Player hand
-	s += fmt.Sprintf("Your hand: %v (Score: %d)\n", formatHand(m.game.PlayerHand), m.game.PlayerHand.Value())
-
-	// Dealer hand
 	if m.game.Flow.IsGameOver() {
 		s += fmt.Sprintf("Dealer hand: %v (Score: %d)\n", formatHand(m.game.DealerHand), m.game.DealerHand.Value())
 	} else {
@@ -20,20 +20,18 @@ func (m Model) View() string {
 		s += fmt.Sprintf("Dealer shows: %s %s [?]\n", cards[0].Rank, cards[0].Suit)
 	}
 
+	s += fmt.Sprintf("Your hand: %v (Score: %d)\n", formatHand(m.game.PlayerHand), m.game.PlayerHand.Value())
+
 	s += "\n"
 
-	// Game result
 	if m.game.Flow.IsGameOver() {
 		switch m.game.Flow.Result() {
-
 		case game.ResultPlayerWin:
-			s += "🎉 YOU WIN!\n"
-
+			s += "You won!\n"
 		case game.ResultDealerWin:
-			s += "💀 DEALER WINS\n"
-
-		case game.ResultTie:
-			s += "🤝 PUSH (Tie)\n"
+			s += "Dealer won\n"
+		case game.ResultPush:
+			s += "Push (Tie)\n"
 		}
 		s += "\nPress q to quit"
 	} else {
