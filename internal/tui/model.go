@@ -1,21 +1,22 @@
 package tui
 
 import (
+	"github.com/charmbracelet/bubbles/help"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/errium/hitme/internal/game"
 )
 
 type Model struct {
-	game     *game.Game
-	quit     bool
-	showHelp bool
+	game *game.Game
+	keys keyMap
+	help help.Model
 }
 
-func NewModel() *Model {
-	return &Model{
-		game:     game.NewGame(),
-		quit:     false,
-		showHelp: true,
+func NewModel() Model {
+	return Model{
+		game: game.NewGame(),
+		keys: keys,
+		help: help.New(),
 	}
 }
 

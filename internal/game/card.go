@@ -38,10 +38,8 @@ func (c Card) Value() int {
 	switch c.Rank {
 	case RankAce:
 		return 11
-
 	case RankKing, RankQueen, RankJack, Rank10:
 		return 10
-
 	default:
 		value, _ := strconv.Atoi(c.Rank)
 		return value

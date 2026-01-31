@@ -1,6 +1,7 @@
 package tui
 
 import (
+	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/errium/hitme/internal/game"
 )
@@ -8,24 +9,25 @@ import (
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
-		switch msg.String() {
-		case "h":
-			if m.game.Flow.State() == game.StatePlayerTurn {
+		switch {
+		case key.Matches(msg, m.keys.Hit):
+			if !m.game.Flow.IsGameOver() {
 				m.game.Hit()
 			}
-		case "s":
-			if m.game.Flow.State() == game.StatePlayerTurn {
+		case key.Matches(msg, m.keys.Stand):
+			if !m.game.Flow.IsGameOver() {
 				m.game.Stand()
 			}
-		case "r":
+		case key.Matches(msg, m.keys.Restart):
 			if m.game.Flow.IsGameOver() {
 				m.game = game.NewGame()
 				m.game.Deal()
 			}
-		case "ctrl+c", "q":
+		case key.Matches(msg, m.keys.Help):
+			m.help.ShowAll = !m.help.ShowAll
+		case key.Matches(msg, m.keys.Quit):
 			return m, tea.Quit
 		}
 	}
-
 	return m, nil
 }

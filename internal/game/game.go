@@ -20,12 +20,10 @@ func NewGame() *Game {
 
 func (g *Game) Deal() {
 	g.deck.Shuffle()
-
 	for range 2 {
 		g.PlayerHand.AddCard(g.deck.Draw())
 		g.DealerHand.AddCard(g.deck.Draw())
 	}
-
 	g.Flow.Deal()
 }
 
@@ -42,12 +40,9 @@ func (g *Game) Stand() {
 	if g.Flow.State() != StatePlayerTurn {
 		return
 	}
-
 	g.Flow.Stand()
 	g.DealerPlay()
-
 	winner := g.DetermineWinner()
-
 	g.Flow.EndGame(winner)
 }
 
@@ -60,20 +55,16 @@ func (g *Game) DealerPlay() {
 func (g *Game) DetermineWinner() uint8 {
 	playerScore := g.PlayerHand.Value()
 	dealerScore := g.DealerHand.Value()
-
 	if g.DealerHand.IsBusted() {
 		return ResultPlayerWin
 	}
-
 	if g.PlayerHand.IsBusted() {
 		return ResultDealerWin
 	}
-
 	if playerScore > dealerScore {
 		return ResultPlayerWin
 	} else if dealerScore > playerScore {
 		return ResultDealerWin
 	}
-
 	return ResultPush
 }

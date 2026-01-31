@@ -19,7 +19,6 @@ func (h *Hand) Clear() {
 func (h *Hand) Value() int {
 	total := 0
 	aces := 0
-
 	for _, c := range h.Cards {
 		if c.Rank == "a" {
 			aces++
@@ -28,12 +27,10 @@ func (h *Hand) Value() int {
 			total += c.Value()
 		}
 	}
-
 	for total > 21 && aces > 0 {
 		total -= 10
 		aces--
 	}
-
 	return total
 }
 
