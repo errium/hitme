@@ -40,6 +40,7 @@ func (g *Game) Stand() {
 	if g.Flow.State() != StatePlayerTurn {
 		return
 	}
+
 	g.Flow.Stand()
 	g.DealerPlay()
 	winner := g.DetermineWinner()
@@ -55,12 +56,14 @@ func (g *Game) DealerPlay() {
 func (g *Game) DetermineWinner() uint8 {
 	playerScore := g.PlayerHand.Value()
 	dealerScore := g.DealerHand.Value()
+
 	if g.DealerHand.IsBusted() {
 		return ResultPlayerWin
 	}
 	if g.PlayerHand.IsBusted() {
 		return ResultDealerWin
 	}
+
 	if playerScore > dealerScore {
 		return ResultPlayerWin
 	} else if dealerScore > playerScore {

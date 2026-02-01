@@ -38,6 +38,7 @@ func (d *Deck) Draw() Card {
 	if len(d.cards) == 0 {
 		panic("Deck was empty when .Draw() was called.")
 	}
+
 	card := d.cards[0]
 	d.cards = d.cards[1:]
 	return card

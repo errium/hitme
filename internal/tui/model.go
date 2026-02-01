@@ -7,9 +7,11 @@ import (
 )
 
 type Model struct {
-	game *game.Game
-	keys keyMap
-	help help.Model
+	game   *game.Game
+	keys   keyMap
+	help   help.Model
+	width  int
+	height int
 }
 
 func NewModel() Model {

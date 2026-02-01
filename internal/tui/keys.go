@@ -10,21 +10,10 @@ type keyMap struct {
 	Quit    key.Binding
 }
 
-func (k keyMap) ShortHelp() []key.Binding {
-	return []key.Binding{k.Help, k.Quit}
-}
-
-func (k keyMap) FullHelp() [][]key.Binding {
-	return [][]key.Binding{
-		{k.Hit, k.Stand},
-		{k.Help, k.Restart, k.Quit},
-	}
-}
-
 var keys = keyMap{
 	Hit: key.NewBinding(
-		key.WithKeys("d"),
-		key.WithHelp("d", "hit"),
+		key.WithKeys("h"),
+		key.WithHelp("h", "hit"),
 	),
 	Stand: key.NewBinding(
 		key.WithKeys("s"),
@@ -36,10 +25,21 @@ var keys = keyMap{
 	),
 	Help: key.NewBinding(
 		key.WithKeys("?"),
-		key.WithHelp("?", "toggle help"),
+		key.WithHelp("?", "help"),
 	),
 	Quit: key.NewBinding(
 		key.WithKeys("q", "ctrl+c"),
 		key.WithHelp("q", "quit"),
 	),
+}
+
+func (k keyMap) ShortHelp() []key.Binding {
+	return []key.Binding{k.Quit, k.Help}
+}
+
+func (k keyMap) FullHelp() [][]key.Binding {
+	return [][]key.Binding{
+		{k.Hit, k.Stand, k.Restart},
+		{k.Help, k.Quit},
+	}
 }

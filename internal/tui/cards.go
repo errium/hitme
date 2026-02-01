@@ -16,8 +16,8 @@ const (
 var (
 	generic = lipgloss.NewStyle().
 		Align(lipgloss.Top, lipgloss.Left).
-		Bold(true).
 		Border(lipgloss.RoundedBorder()).
+		Bold(true).
 		Padding(0, 1).
 		Width(cardWidth).
 		Height(cardHeight)
@@ -26,7 +26,7 @@ var (
 	redCardStyle = generic.
 			Foreground(lipgloss.ANSIColor(1))
 	hiddenCardStyle = generic.
-			Foreground(lipgloss.ANSIColor(3))
+			Foreground(lipgloss.ANSIColor(5))
 )
 
 func getSuitSymbol(suit string) string {
