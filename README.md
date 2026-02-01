@@ -42,3 +42,9 @@ go build -o hitme
 ## License
 
 This project is licensed under GPL-3.0-or-later.
+
+---
+
+> **P.S.**
+> Just a heads-up: I'm new to Go, and this is a personal pet project.  
+> Expect a bit of chaos, maybe some weird code, but plenty of effort.
