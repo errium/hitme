@@ -8,8 +8,9 @@ import (
 )
 
 const (
-	cardWidth  int = 8
-	cardHeight int = 5
+	cardWidth    int    = 8
+	cardHeight   int    = 5
+	hiddenSymbol string = "?"
 )
 
 var (
@@ -28,35 +29,6 @@ var (
 			Foreground(lipgloss.ANSIColor(3))
 )
 
-func renderCard(c game.Card) string {
-	rank := strings.ToUpper(c.Rank)
-	suit := getSuitSymbol(c.Suit)
-	vSpaceBetween := cardWidth - len(rank) - len(suit)
-	hSpaceBetween := cardHeight - 1
-
-	var style lipgloss.Style
-	if c.Suit == "hearts" || c.Suit == "diamonds" {
-		style = redCardStyle
-	} else {
-		style = blackCardStyle
-	}
-
-	content := rank + strings.Repeat(" ", vSpaceBetween) + suit
-	content += strings.Repeat("\n", hSpaceBetween)
-	content += suit + strings.Repeat(" ", vSpaceBetween) + rank
-	return style.Render(content)
-}
-
-func renderHiddenCard() string {
-	vSpaceBetween := cardWidth - 4
-	hSpaceBetween := cardHeight - 1
-
-	content := "?" + strings.Repeat(" ", vSpaceBetween) + "?"
-	content += strings.Repeat("\n", hSpaceBetween)
-	content += "?" + strings.Repeat(" ", vSpaceBetween) + "?"
-	return hiddenCardStyle.Render(content)
-}
-
 func getSuitSymbol(suit string) string {
 	switch suit {
 	case "clubs":
@@ -72,13 +44,41 @@ func getSuitSymbol(suit string) string {
 	}
 }
 
+func renderCard(c game.Card) string {
+	rank := strings.ToUpper(c.Rank)
+	suit := getSuitSymbol(c.Suit)
+	horizontalSpace := cardWidth - len(rank) - len(suit)
+	verticalSpace := cardHeight - 1
+
+	var style lipgloss.Style
+	if c.Suit == "hearts" || c.Suit == "diamonds" {
+		style = redCardStyle
+	} else {
+		style = blackCardStyle
+	}
+
+	content := rank + strings.Repeat(" ", horizontalSpace) + suit
+	content += strings.Repeat("\n", verticalSpace)
+	content += suit + strings.Repeat(" ", horizontalSpace) + rank
+	return style.Render(content)
+}
+
+func renderHiddenCard() string {
+	horizontalSpace := cardWidth - 4
+	verticalSpace := cardHeight - 1
+
+	content := hiddenSymbol + strings.Repeat(" ", horizontalSpace) + hiddenSymbol
+	content += strings.Repeat("\n", verticalSpace)
+	content += hiddenSymbol + strings.Repeat(" ", horizontalSpace) + hiddenSymbol
+	return hiddenCardStyle.Render(content)
+}
+
 func renderHand(cards []game.Card, hideSecond bool) string {
 	if len(cards) == 0 {
 		return ""
 	}
 
 	var renderedCards []string
-
 	for i, card := range cards {
 		if i == 1 && hideSecond {
 			renderedCards = append(renderedCards, renderHiddenCard())
@@ -86,35 +86,5 @@ func renderHand(cards []game.Card, hideSecond bool) string {
 			renderedCards = append(renderedCards, renderCard(card))
 		}
 	}
-
-	return joinCardsHorizontally(renderedCards)
-}
-
-func joinCardsHorizontally(cards []string) string {
-	if len(cards) == 0 {
-		return ""
-	}
-
-	// Разбиваем каждую карту на строки
-	cardLines := make([][]string, len(cards))
-	for i, card := range cards {
-		cardLines[i] = strings.Split(card, "\n")
-	}
-
-	// Склеиваем построчно
-	var result []string
-	height := len(cardLines[0])
-
-	for row := 0; row < height; row++ {
-		var line string
-		for i, card := range cardLines {
-			line += card[row]
-			if i < len(cardLines)-1 {
-				line += " " // пробел между картами
-			}
-		}
-		result = append(result, line)
-	}
-
-	return strings.Join(result, "\n")
+	return lipgloss.JoinHorizontal(lipgloss.Top, renderedCards...)
 }
