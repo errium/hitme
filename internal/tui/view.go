@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/charmbracelet/lipgloss"
+
 	"github.com/errium/hitme/internal/game"
 )
 

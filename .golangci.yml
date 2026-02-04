@@ -1,0 +1,41 @@
+version: "2"
+
+linters:
+  default: standard
+  enable:
+    - errcheck
+    - exhaustive
+    - funlen
+    - goconst
+    - gocyclo
+    - govet
+    - ineffassign
+    - misspell
+    - perfsprint
+    - prealloc
+    - revive
+    - staticcheck
+    - unconvert
+    - unparam
+    - whitespace
+  settings:
+    funlen:
+      lines: 100
+    gocyclo:
+      min-complexity: 15
+    revive:
+      rules:
+        - name: package-comments
+          disabled: true
+          
+formatters:
+  enable:
+    - gofumpt
+    - goimports
+    - golines
+  settings:
+    gofumpt:
+      extra-rules: true
+    goimports:
+      local-prefixes:
+        - github.com/errium/hitme

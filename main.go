@@ -20,9 +20,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/errium/hitme/internal/tui"
-
 	tea "github.com/charmbracelet/bubbletea"
+
+	"github.com/errium/hitme/internal/tui"
 )
 
 func main() {
